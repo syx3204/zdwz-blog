@@ -134,6 +134,300 @@
                 transform: translateY(-10px);
             }
         }
+                /* 全局样式 */
+                body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: rgba(0, 77, 153, 0.8);
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #00ccffce;
+        }
+
+        /* 背景图 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://api.lolimi.cn/API/dmtx/pc.php') no-repeat center center/cover;
+            z-index: -1;
+            animation: backgroundAnimation 20s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* 主要内容 */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            padding-top: 100px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .main-content h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .main-content p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .main-content .btn {
+            background-color: #00d5ff;
+            color: #004d99;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .main-content .btn:hover {
+            background-color: #0bbaff;
+        }
+
+        /* 文章列表 */
+        .blog-posts {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-posts h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #004d99;
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .post {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .post h3 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+            color: #004d99;
+        }
+
+        .post h3 a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .post p {
+            margin: 0;
+            color: #666;
+        }
+
+        .post .date {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: rgba(0, 77, 153, 0.8);
+            color: #fff;
+            padding: 40px 20px 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            margin: 0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #00d0ff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #00ccff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+                /* 基础样式 */
+                a {
+            text-decoration: none; /* 去除下划线 */
+            color: #3498db; /* 链接颜色 */
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.3s ease, background-color 0.3s ease; /* 添加过渡效果 */
+        }
+
+        /* 鼠标悬停效果 */
+        a:hover {
+            color: #71cff2; /* 鼠标悬停时的颜色 */
+        }
+
+        /* 点击效果 */
+        a:active {
+            color: #2eafeb; /* 点击时的颜色 */
+        }
+
+        /* 焦点效果 */
+        a:focus {
+            outline: none; /* 去除默认的焦点轮廓 */
+            background-color: #f1c40f00; /* 焦点时的背景颜色 */
+            color: #fff; /* 焦点时的文字颜色 */
+            // padding: 5px 10px; /* 增加内边距 */
+            border-radius: 5px; /* 圆角效果 */
+        }
     </style>
 </head>
 <body>
@@ -142,10 +436,10 @@
 
     <!-- 头部 -->
     <header>
-        <div class="logo">
+        <a href="index.html"><div class="logo">
             <img src="images/logo.png" alt="学校Logo">
             <h1>张店五中</h1>
-        </div>
+        </div></a>
         <nav>
             <ul>
                 <li><a href="index.html">首页</a></li>
