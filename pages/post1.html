@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>张店五中 - post1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://vercount.one/js"></script>
     <style>
         /* 全局样式 */
         body {
@@ -109,15 +110,6 @@
         .post-content p {
             font-size: 1.1em;
             color: #fff;
-        }
-
-        footer {
-            background-color: rgba(0, 77, 153, 0.8);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            margin-top: 40px;
-            backdrop-filter: blur(10px);
         }
 
         /* 动画 */
@@ -436,10 +428,10 @@
 
     <!-- 头部 -->
     <header>
-        <a href="../index.html"><div class="logo">
+        <div class="logo">
             <img src="../images/logo.png" alt="学校Logo">
             <h1>张店五中</h1>
-        </div></a>
+        </div>
         <nav>
             <ul>
                 <li><a href="../index.html">首页</a></li>
@@ -466,9 +458,9 @@
             <div class="footer-section">
                 <h3>快速链接</h3>
                 <ul>
-                    <li><a href="index.html">首页</a></li>
-                    <li><a href="about.html">关于</a></li>
-                    <li><a href="contact.html">联系</a></li>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../contact.html">联系</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -483,6 +475,8 @@
             </div>
         </div>
         <div class="footer-bottom">
+            <p>本文总阅读量 <span id="busuanzi_value_page_pv"></span> 次</p>
+            <p>你是第 <span id="busuanzi_value_page_uv"></span> 位看到本文的人</p>
             <p>&copy; <span id="year"></span> syx. 保留所有权利.</p>
         </div>
     </footer>
