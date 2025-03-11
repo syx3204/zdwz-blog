@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script defer src="https://vercount.one/js"></script>
     <link rel="icon" href="https://api.lolimi.cn/API/dmtx/api.php" type="images/logo.png">
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/@waline/client@v3/dist/waline.css"
+     />
+    <!-- Meta 图标 (可选) -->
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/@waline/client@v3/dist/waline-meta.css"
+    />
     <style>
         /* 全局样式 */
         body {
@@ -421,6 +430,36 @@
             // padding: 5px 10px; /* 增加内边距 */
             border-radius: 5px; /* 圆角效果 */
         }
+
+        /* 修改评论框外观 */
+        .wl-panel {
+            border-radius: 4px !important;
+        }
+
+        :root {
+            --waline-bgcolor-light: transparent !important;
+        }
+
+        .wl-btn {
+            border-radius: 0.3em !important;
+        }
+
+        .wl-editor {
+            background-image: url('https://img-svr.github.io/img/win11girl.gif');
+            background-size: 25%;
+            background-repeat: no-repeat;
+            background-position: right bottom;
+            background-color: rgba(255, 255, 255, 0);
+            resize: vertical
+        }
+        .wl-editor:focus{
+            background-position-x: 800px;
+            background-position-y: 1000px;
+            transition: all 0.2s ease-in-out 0s;
+        }
+
+
+    
     </style>
 </head>
 <body>
@@ -447,6 +486,17 @@
         <h2>post 1</h2>
         <p>first paragraph</p>
         <p>second paragraph</p>
+          <!-- ... -->
+        <div id="waline"></div>
+        <script type="module">
+            import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+            init({
+            el: '#waline',
+            serverURL: 'https://myproject.us.kg',
+            });
+        </script>
+
     </section>
 
     <!-- 页脚 -->
@@ -466,12 +516,12 @@
             </div>
             <div class="footer-section">
                 <h3>关注此项目</h3>
-                <a href="https://github.com/syx3204/zdwz-blog" class="btn">GitHub</a>
+                <a href="https://github.com/syx3204/zdwz-blog" class="btn" target="_blank">GitHub</a>
                 <h3>关注我</h3>
                 <div class="social-links">
-                    <a href="https://qm.qq.com/cgi-bin/qm/qr?k=wybZUG-7LGEyGq_x61TjqOvlLFML69BP"><i class="fab fa-qq"></i></a>
-                    <a href="https://github.com/syx3204"><i class="fab fa-github"></i></a>
-                    <a href="https://x.com/SongYong25387"><i class="fab fa-twitter"></i></a>
+                    <a href="https://qm.qq.com/cgi-bin/qm/qr?k=wybZUG-7LGEyGq_x61TjqOvlLFML69BP" target="_blank"><i class="fab fa-qq"></i></a>
+                    <a href="https://github.com/syx3204" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://x.com/SongYong25387" target="_blank"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
