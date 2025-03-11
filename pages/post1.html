@@ -486,6 +486,346 @@
         <h2>post 1</h2>
         <p>first paragraph</p>
         <p>second paragraph</p>
+          <!--播放器开始-->
+        <div style="
+            width: 600px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            font-family: Arial, sans-serif;
+            display: flex;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+            /* 禁用文本选择 */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        ">
+            <!-- 高斯模糊背景 -->
+            <div id="background" style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+                filter: blur(20px) brightness(0.7);
+                z-index: -1;
+            "></div>
+
+            <!-- 封面 -->
+            <img id="cover" alt="歌曲封面" style="width: 150px; height: 150px; border-radius: 10px; user-drag: none; -webkit-user-drag: none;" draggable="false">
+
+            <!-- 右侧内容 -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 10px;">
+                <!-- 歌曲信息 -->
+                <div style="text-align: right;">
+                    <h3 style="margin: 0; font-size: 18px; color:#fff" id="song-title"></h3>
+                    <p style="margin: 5px 0; color: #fff;" id="song-artist"></p>
+                </div>
+
+                <!-- 歌词 -->
+                <div id="lyrics-container" style="
+                    flex: 1;
+                    font-size: 14px;
+                    color: #fff;
+                    line-height: 1.5;
+                    padding: 10px;
+                    background-color: rgba(0, 0, 0, 0.3);
+                    border-radius: 5px;
+                    backdrop-filter: blur(5px);
+                    position: relative;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div id="lyrics" style="
+                        text-align: center;
+                        transition: opacity 0.5s ease-in-out;
+                    ">
+                        lyrics
+                    </div>
+                </div>
+
+                <!-- 进度条和播放按钮 -->
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <!-- 进度条 -->
+                    <div style="flex: 1; height: 5px; background-color: rgba(255, 255, 255, 0.52); border-radius: 5px; position: relative; cursor: pointer;">
+                        <div id="progress" style="height: 100%; background-color: #d1d3d7d5; width: 0%; border-radius: 5px; transition: width 0.1s;"></div>
+                        <div id="progress-thumb" style="
+                            width: 10px;
+                            height: 10px;
+                            background-color: #fafafbc3;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 50%;
+                            transform: translate(-50%, -50%);
+                            cursor: pointer;
+                        "></div>
+                    </div>
+
+                    <!-- 播放按钮 -->
+                    <button id="play-pause-btn" onclick="playPause()" style="
+                        width: 40px;
+                        height: 40px;
+                        border: none;
+                        border-radius: 50%;
+                        background: url('play.svg') center/cover;
+                        cursor: pointer;
+                    "></button>
+                </div>
+            </div>
+
+            <!-- 音频 -->
+            <audio id="audio"></audio>
+
+            <script>
+                // ===== 配置区域 =====
+                const config = {
+                    // 歌曲信息
+                    title: 'キミに溺れたい (feat. 暖日いな)', // 歌曲名称
+                    artist: '堂村璃羽/暖日いな', // 歌手
+                    album: ' ', // 专辑名称
+
+                    // 封面图片
+                    coverUrl: 'https://p2.music.126.net/sBKOR_KTewkUIzyQF-EOzw==/109951169178305249.jpg', // 封面图片 URL
+
+                    // 音频文件
+                    audioUrl: 'https://m.ccw.site/creator-college/videos/08830f85946ab631f759666e39e85bf8.flac', // 音频文件 URL
+
+                    // 播放按钮图标
+                    playIcon: 'https://img-svr.github.io/img/play.svg', // 播放图标 URL
+                    pauseIcon: 'https://img-svr.github.io/img/pause.svg', // 暂停图标 URL
+
+                    // LRC 歌词
+                    lrc: `
+        [00:00.00] 作词 : 堂村璃羽/暖日いな
+        [00:01.00] 作曲 : 堂村璃羽/暖日いな/MITSUKI
+        [00:20.75]ねえ　キミの世界の中
+        [00:25.03]僕はちゃんと息をできてるのかな
+        [00:29.97]あぁ　もう少しだけ
+        [00:32.30]ぐっと抱き寄せて
+        [00:34.51]ふたりだけの夢で溺れたいの
+        [00:38.62]目が覚めて　キミが隣にいる
+        [00:42.28]なんて妄想で
+        [00:44.62]また今日が始まっていくの
+        [00:47.71]笑った顔も その怒った声も
+        [00:51.44]全部愛を超えもう
+        [00:53.61]眠れない夜がくるよ
+        [00:57.04]ねえ　キミの世界の中
+        [01:01.58]僕はちゃんと息をできてるのかな
+        [01:06.45]あぁ　もう少しだけ
+        [01:08.80]ぐっと抱き寄せて
+        [01:11.05]ふたりだけの夢で溺れたいの
+        [01:14.88]BA BA BABY HI
+        [01:16.11]君と一緒に夢を見ていたい
+        [01:18.91]ただ君のそばにいたい
+        [01:21.10]君の前だけ馬鹿でいたいよ
+        [01:23.81]いつまでもわがままな僕を
+        [01:26.95]君はいつも笑ってくれるの
+        [01:29.98]愛が溢れてこぼれないように
+        [01:32.98]夜は君の声で越えたいし
+        [01:35.15]朝はずっと君の声で起きたいし
+        [01:37.71]わがままな僕の頭がいつまでも
+        [01:40.87]君で染まっていく
+        [01:42.67]僕の好きなTUNEが伝う空中
+        [01:44.57]ずっと君に夢中な四六時中
+        [01:47.08]今夜も君と踊る夜
+        [01:48.93]メロディが夢へ誘う君と僕
+        [01:51.78]ねえ　僕の世界の中
+        [01:56.52]キミの笑顔だけで　満ち足りてくの
+        [02:01.34]あぁ　もう少しだけ
+        [02:03.62]ぎゅっと抱きしめて
+        [02:05.95]ひとりよがりの夢よ冷めないで
+        [02:10.19]ああ気づけばこのメロディも終わり
+        [02:12.44]今宵よどうか覚めないでと願い
+        [02:14.66]それでも過ぎる時間の針
+        [02:16.46]ならせめて忘れぬよう交わした誓い
+        [02:19.07]過去の痛みだけは消したい
+        [02:21.39]でも過去の幸は連れてく未来へ
+        [02:23.84]君と僕を照らす夜
+        [02:25.73]LAST HOOKへ君の身を運ぶ
+        [02:28.43]ねえ　キミの世界の中
+        [02:33.04]僕はちゃんと息をできてるのかな
+        [02:38.15]あぁ　もう少しだけ
+        [02:40.23]ぐっと抱き寄せて
+        [02:42.63]ふたりだけの夢に溺れたいの
+
+                    `
+                };
+                // ===== 配置区域结束 =====
+
+                // 获取元素
+                const audio = document.getElementById('audio');
+                const progress = document.getElementById('progress');
+                const progressThumb = document.getElementById('progress-thumb');
+                const playPauseBtn = document.getElementById('play-pause-btn');
+                const lyricsElement = document.getElementById('lyrics');
+                const songTitleElement = document.getElementById('song-title');
+                const songArtistElement = document.getElementById('song-artist');
+                const coverElement = document.getElementById('cover');
+                const backgroundElement = document.getElementById('background');
+
+                // 设置封面和背景
+                coverElement.src = config.coverUrl;
+                backgroundElement.style.backgroundImage = `url('${config.coverUrl}')`;
+
+                // 设置歌曲信息
+                songTitleElement.textContent = config.title;
+                songArtistElement.textContent = config.artist;
+
+                // 设置音频文件
+                audio.src = config.audioUrl;
+
+                // 设置播放按钮图标
+                playPauseBtn.style.backgroundImage = `url('${config.playIcon}')`;
+
+                // 解析 LRC 歌词
+                const lrcLines = config.lrc
+                    .trim()
+                    .split('\n')
+                    .map(line => {
+                        const timeMatch = line.match(/\[(\d{2}):(\d{2}\.\d{2,3})\]/); // 支持 [mm:ss.xxx] 格式
+                        if (timeMatch) {
+                            const minutes = parseFloat(timeMatch[1]);
+                            const seconds = parseFloat(timeMatch[2]);
+                            const time = minutes * 60 + seconds; // 转换为秒
+                            const text = line.replace(/\[\d{2}:\d{2}\.\d{2,3}\]/, '').trim(); // 移除时间标签
+                            return { time, text };
+                        }
+                        return null;
+                    })
+                    .filter(line => line !== null);
+
+                // 初始化 Media Session API
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: config.title,
+                        artist: config.artist,
+                        album: config.album,
+                        artwork: [
+                            { src: config.coverUrl, sizes: '150x150', type: 'image/jpeg' }
+                        ]
+                    });
+
+                    navigator.mediaSession.setActionHandler('play', () => {
+                        audio.play();
+                        playPauseBtn.style.backgroundImage = `url('${config.pauseIcon}')`;
+                    });
+
+                    navigator.mediaSession.setActionHandler('pause', () => {
+                        audio.pause();
+                        playPauseBtn.style.backgroundImage = `url('${config.playIcon}')`;
+                    });
+
+                    navigator.mediaSession.setActionHandler('seekbackward', () => {
+                        audio.currentTime = Math.max(audio.currentTime - 10, 0);
+                    });
+
+                    navigator.mediaSession.setActionHandler('seekforward', () => {
+                        audio.currentTime = Math.min(audio.currentTime + 10, audio.duration);
+                    });
+                }
+
+                // 播放/暂停功能
+                function playPause() {
+                    if (audio.paused) {
+                        audio.play();
+                        playPauseBtn.style.backgroundImage = `url('${config.pauseIcon}')`;
+                    } else {
+                        audio.pause();
+                        playPauseBtn.style.backgroundImage = `url('${config.playIcon}')`;
+                    }
+                }
+
+                // 更新进度条
+                audio.addEventListener('timeupdate', () => {
+                    const percent = (audio.currentTime / audio.duration) * 100;
+                    progress.style.width = percent + '%';
+                    progressThumb.style.left = percent + '%';
+
+                    // 更新歌词
+                    updateLyrics(audio.currentTime);
+                });
+
+                // 点击或拖拽进度条跳转播放
+                const progressBar = document.querySelector('div[style*="height: 5px;"]');
+                let isDragging = false;
+
+                progressBar.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    updateProgress(e);
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging) {
+                        updateProgress(e);
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+
+                progressBar.addEventListener('click', (e) => {
+                    updateProgress(e);
+                });
+
+                function updateProgress(e) {
+                    const rect = progressBar.getBoundingClientRect();
+                    const offsetX = e.clientX - rect.left;
+                    const percent = Math.min(Math.max(offsetX / rect.width, 0), 1);
+                    progress.style.width = percent * 100 + '%';
+                    progressThumb.style.left = percent * 100 + '%';
+                    audio.currentTime = percent * audio.duration;
+                }
+
+                // 更新歌词
+                let lastLyric = '';
+                function updateLyrics(currentTime) {
+                    let currentLyric = ' ';
+                    for (let i = 0; i < lrcLines.length; i++) {
+                        if (currentTime < lrcLines[i].time) {
+                            currentLyric = lrcLines[i - 1]?.text || ' ';
+                            break;
+                        }
+                        // 如果 currentTime 大于所有时间标签，显示最后一行歌词
+                        if (i === lrcLines.length - 1) {
+                            currentLyric = lrcLines[i].text;
+                        }
+                    }
+
+                    if (currentLyric === lastLyric) return;
+                    lastLyric = currentLyric;
+
+                    lyricsElement.style.opacity = 0;
+                    setTimeout(() => {
+                        lyricsElement.textContent = currentLyric;
+                        lyricsElement.style.opacity = 1;
+                    }, 200);
+                }
+                // 保源码
+                document.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.keyCode === 123 || // F12
+                        (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+                        (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
+                        (e.ctrlKey && e.shiftKey && e.keyCode === 74)) { // Ctrl+Shift+J
+                        e.preventDefault();
+                    }
+                });
+
+            </script>
+        </div>
+          <!--播放器结束-->
           <!-- ... -->
         <div id="waline"></div>
         <script type="module">
