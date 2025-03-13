@@ -674,8 +674,9 @@
 
                 // 设置封面和背景
                 coverElement.src = config.coverUrl;
-                backgroundElement.style.backgroundImage = `url('${config.coverUrl}')`;
-
+                backgroundElement.style.backgroundImage = ``;
+                //backgroundElement.style.backgroundImage = `url('${config.coverUrl}')`; // 原设置背景图
+                
                 // 设置歌曲信息
                 songTitleElement.textContent = config.title;
                 songArtistElement.textContent = config.artist;
@@ -826,6 +827,7 @@
             </script>
         </div>
           <!--播放器结束-->
+
           <!-- ... -->
         <div id="waline"></div>
         <script type="module">
